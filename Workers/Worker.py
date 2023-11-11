@@ -11,7 +11,10 @@ class Worker:
         self.name = name
         self.surname = surname
         self.department = department
-        self.salary = salary
+        self.salary = float(salary)
+
+    def get_id(self):
+        return self.__id
 
     def __str__(self):
         return (f"Worker's id: {self.__id}\n"
@@ -39,6 +42,15 @@ class WorkerDB:
                 name, surname, department, salary = row
                 worker = Worker(name, surname, department, salary)
                 self.add_worker(worker)
+
+    def edit_workers(self, local_id, local_label, edited_label):
+        for worker in self.workers:
+            if worker.get_id() == local_id:
+                worker_to_edit = worker
+                setattr(worker_to_edit, local_label, edited_label)
+
+    def sort_workers(self, field, ascending=True):
+        self.workers.sort(key=lambda worker: getattr(worker, field), reverse=not ascending)
 
     def display_workers(self):
         for worker in self.workers:
