@@ -42,8 +42,9 @@ def main():
                 ascending = input("Sort in ascending order? (y/n): ").lower().startswith('y')
                 workers.sort_workers(field_name, ascending)
             case '5':
-                search_query = input("Enter search query: ")
-                workers.search_workers(search_query)
+                field_name = input("Enter field name to search by(name, surname, department, salary): ")
+                keyword = input("Enter keyword: ")
+                workers.search_workers(field_name, keyword)
             case '6':
                 worker_id = int(input("Enter id: "))
                 field_to_edit = input("Enter field name to edit(name, surname, department, salary): ")

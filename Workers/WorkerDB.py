@@ -2,6 +2,20 @@ import csv
 from Worker import Worker
 
 
+def sort_dec(func):
+    def wrapper(self, field,ascending=True):
+        func(self, field, ascending)
+        print(f"Sorted by {field}:")
+        self.display_workers()
+    return wrapper
+
+
+def search_dec(func):
+    def wrapper(self, field, keyword):
+        func(self, field, keyword)
+    return wrapper
+
+
 class WorkerDB:
     def __init__(self):
         self.workers = []
@@ -30,17 +44,22 @@ class WorkerDB:
                 worker_to_edit = worker
                 setattr(worker_to_edit, local_label, edited_label)
 
+    @sort_dec
     def sort_workers(self, field, ascending=True):
         self.workers.sort(key=lambda worker: getattr(worker, field), reverse=not ascending)
 
-    def search_workers(self, search_query):
+    @search_dec
+    def search_workers(self, field, keyword):
         search_results = []
         for worker in self.workers:
-            if search_query.lower() in str(worker).lower():
+            if keyword.lower() in str(getattr(worker, field)).lower():
                 search_results.append(worker)
-        print("Search Results:\n")
-        for ad in search_results:
-            print(ad, end="\n\n")
+        if len(search_results) == 0:
+            print(f"There are no matches in '{field}' with keyword:'{keyword}'")
+        else:
+            print(f"Search Results for {field} containing '{keyword}':\n")
+            for result in search_results:
+                print(result, end="\n\n")
 
     def display_workers(self):
         for worker in self.workers:
