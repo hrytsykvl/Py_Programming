@@ -1,11 +1,15 @@
-id_count = 0
+def generator_id():
+    count = 1
+    while True:
+        yield count
+        count += 1
 
 
 class Worker:
+    id_count = generator_id()
+
     def __init__(self, name, surname, department, salary):
-        global id_count
-        self.__id = id_count
-        id_count += 1
+        self.__id = next(self.id_count)
         self.name = name
         self.surname = surname
         self.department = department

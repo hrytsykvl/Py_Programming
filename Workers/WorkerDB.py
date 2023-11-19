@@ -3,16 +3,24 @@ from Worker import Worker
 
 
 def sort_dec(func):
-    def wrapper(self, field,ascending=True):
-        func(self, field, ascending)
-        print(f"Sorted by {field}:")
-        self.display_workers()
+    def wrapper(self, field, ascending=True):
+        try:
+            func(self, field, ascending)
+            print(f"Sorted by {field}:")
+            self.display_workers()
+        except AttributeError:
+            print("Invalid field for sorting.")
+
     return wrapper
 
 
 def search_dec(func):
     def wrapper(self, field, keyword):
-        func(self, field, keyword)
+        try:
+            func(self, field, keyword)
+        except AttributeError:
+            print("Invalid field for searching.")
+
     return wrapper
 
 
@@ -30,13 +38,16 @@ class WorkerDB:
                 return
 
     def read_workers(self, filename):
-        with open(filename, 'r') as file:
-            reader = csv.reader(file)
-            next(reader)
-            for row in reader:
-                name, surname, department, salary = row
-                worker = Worker(name, surname, department, salary)
-                self.add_worker(worker)
+        try:
+            with open(filename, 'r') as file:
+                reader = csv.reader(file)
+                next(reader)
+                for row in reader:
+                    name, surname, department, salary = row
+                    worker = Worker(name, surname, department, salary)
+                    self.add_worker(worker)
+        except FileNotFoundError:
+            print("File not found")
 
     def edit_workers(self, local_id, local_label, edited_label):
         for worker in self.workers:

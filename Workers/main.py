@@ -22,11 +22,8 @@ def main():
 
         match choice:
             case '1':
-                try:
-                    filepath = input("Enter file you want to read from: ")
-                    workers.read_workers(filepath)
-                except Exception as ex:
-                    print(ex)
+                filepath = input("Enter file you want to read from: ")
+                workers.read_workers(filepath)
             case '2':
                 name = input("Enter name: ")
                 surname = input("Enter surname: ")
