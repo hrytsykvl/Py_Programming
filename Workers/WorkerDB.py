@@ -17,7 +17,7 @@ def sort_dec(func):
 def search_dec(func):
     def wrapper(self, field, keyword):
         try:
-            func(self, field, keyword)
+            return func(self, field, keyword)
         except AttributeError:
             print("Invalid field for searching.")
 
@@ -71,6 +71,7 @@ class WorkerDB:
             print(f"Search Results for {field} containing '{keyword}':\n")
             for result in search_results:
                 print(result, end="\n\n")
+        return search_results
 
     def display_workers(self):
         for worker in self.workers:
