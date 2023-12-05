@@ -9,6 +9,7 @@ MENU = """
 5. Search workers
 6. Edit worker
 7. Show workers
+8. Generate and save pie diagram by department
 0. Quit
 """
 
@@ -49,6 +50,9 @@ def main():
                 workers.edit_workers(worker_id, field_to_edit, edited_field)
             case '7':
                 workers.display_workers()
+            case '8':
+                workers.plot_pie_by_department()
+                print("Pie chart generated and saved")
             case '0':
                 return
             case _:

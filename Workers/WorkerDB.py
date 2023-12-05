@@ -1,5 +1,6 @@
 import csv
 from Worker import Worker
+import matplotlib.pyplot as plt
 
 
 def sort_dec(func):
@@ -72,6 +73,25 @@ class WorkerDB:
             for result in search_results:
                 print(result, end="\n\n")
         return search_results
+
+    def plot_pie_by_department(self, filename="departments_pie.png"):
+        departments_counts = {}
+
+        for worker in self.workers:
+            department = worker.department
+            if department not in departments_counts:
+                departments_counts[department] = 1
+            else:
+                departments_counts[department] += 1
+
+        labels = list(departments_counts.keys())
+        sizes = list(departments_counts.values())
+
+        plt.figure(figsize=(8, 8))
+        plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140)
+
+        plt.savefig(filename)
+        plt.show()
 
     def display_workers(self):
         for worker in self.workers:
