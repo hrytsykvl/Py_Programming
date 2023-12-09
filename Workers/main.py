@@ -1,5 +1,7 @@
 from WorkerDB import WorkerDB
 from Worker import Worker
+import tkinter as tk
+from WorkerMenu import WorkerMenu
 
 MENU = """
 1. Load data from csv file
@@ -61,4 +63,16 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    while True:
+        user_choice = input("How would you like to run the program('1'-console, '2'-gui, 'e'-exit):")
+        if user_choice == '1':
+            main()
+        elif user_choice == '2':
+            root = tk.Tk()
+            worker_menu = WorkerMenu(root)
+            root.mainloop()
+        elif user_choice == 'e':
+            exit()
+        else:
+            print("Please enter valid choice")
+            continue

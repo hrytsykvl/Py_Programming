@@ -58,6 +58,8 @@ class WorkerDB:
 
     @sort_dec
     def sort_workers(self, field, ascending=True):
+        if field == "id":
+            field = "_Worker__id"
         self.workers.sort(key=lambda worker: getattr(worker, field), reverse=not ascending)
 
     @search_dec
@@ -88,7 +90,7 @@ class WorkerDB:
         sizes = list(departments_counts.values())
 
         plt.figure(figsize=(8, 8))
-        plt.pie(sizes, labels=labels, autopct='%1.1f%%', startangle=140)
+        plt.pie(sizes, labels=labels, autopct='%1.1f%%')
 
         plt.savefig(filename)
         plt.show()
